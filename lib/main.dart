@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Mangapp',
       theme: ThemeData(
         primarySwatch: Colors.orange,
+        fontFamily: 'Poppins',
       ),
       home: const HomePage(),
     );
