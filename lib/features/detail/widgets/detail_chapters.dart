@@ -48,7 +48,7 @@ class _DetailChaptersState extends State<DetailChapters> {
           const SizedBox(height: 16),
           LayoutBuilder(
             builder: (context, constraints) {
-              if (constraints.maxWidth <= 600) {
+              if (constraints.maxWidth <= 700) {
                 return buildList(context);
               } else if (constraints.maxWidth <= 1000) {
                 return buildGrid(context, 6);
@@ -162,27 +162,34 @@ class _DetailChaptersState extends State<DetailChapters> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    'Chapter',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: isRead ? Colors.blueGrey : Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Flexible(
+                    child: Text(
+                      'Chapter',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: isRead ? Colors.blueGrey : Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    '${index + 1}',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: isRead ? Colors.blueGrey : Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Flexible(
+                    child: Text(
+                      '${index + 1}',
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                color: isRead ? Colors.blueGrey : Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    '${index + 7} days ago',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: isRead ? Colors.blueGrey : Colors.white,
-                        ),
+                  Flexible(
+                    child: Text(
+                      '${index + 7} days ago',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: isRead ? Colors.blueGrey : Colors.white,
+                          ),
+                    ),
                   ),
                 ],
               ),
