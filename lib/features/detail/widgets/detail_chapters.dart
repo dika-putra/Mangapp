@@ -46,7 +46,18 @@ class _DetailChaptersState extends State<DetailChapters> {
             ],
           ),
           const SizedBox(height: 16),
-          buildList(context),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth <= 600) {
+                return buildList(context);
+              } else if (constraints.maxWidth <= 1000) {
+                return buildGrid(context, 6);
+              } else if (constraints.maxWidth <= 1200) {
+                return buildGrid(context, 8);
+              }
+              return buildGrid(context, 10);
+            },
+          ),
         ],
       ),
     );
@@ -109,7 +120,7 @@ class _DetailChaptersState extends State<DetailChapters> {
                 child: Text(
                   'Chapter ${index + 1}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: isRead ? Colors.orange : Colors.blueGrey,
+                        color: isRead ? Colors.blueGrey : Colors.orange,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -125,6 +136,59 @@ class _DetailChaptersState extends State<DetailChapters> {
         },
         separatorBuilder: (BuildContext context, int index) =>
             const SizedBox(height: 16),
+      ),
+    );
+  }
+
+  Widget buildGrid(BuildContext context, int gridCount) {
+    return GridView.count(
+      crossAxisCount: gridCount,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      shrinkWrap: true,
+      reverse: selectedItem == 0,
+      physics: const NeverScrollableScrollPhysics(),
+      children: List.generate(
+        chapterItems.length,
+        (index) {
+          final isRead = chapterItems[index];
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: isRead ? Colors.grey.withAlpha(150) : Colors.orange,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Chapter',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: isRead ? Colors.blueGrey : Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${index + 1}',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: isRead ? Colors.blueGrey : Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${index + 7} days ago',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: isRead ? Colors.blueGrey : Colors.white,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
