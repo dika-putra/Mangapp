@@ -10,11 +10,12 @@ class HomeBanner extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       child: SizedBox(
         width: double.infinity,
-        height: 150,
+        height: MediaQuery.of(context).size.width / 4.5,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(defaultCorner),
           child: Image.network(
             'https://assets.christiantimes.com/files/cache/image/2/50/25070_w_760_281.jpg',
+            fit: BoxFit.cover,
           ),
         ),
       ),
