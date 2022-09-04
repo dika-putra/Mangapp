@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../commons/constants.dart';
@@ -63,7 +64,8 @@ class _DetailHeaderState extends State<DetailHeader> {
                 ),
                 SafeArea(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16),
+                    padding:
+                        const EdgeInsets.only(left: 16, top: kIsWeb ? 16 : 0),
                     child: GestureDetector(
                       onTap: () {
                         widget.onBackPressed.call();
