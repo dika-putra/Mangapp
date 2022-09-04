@@ -27,98 +27,110 @@ class _DetailHeaderState extends State<DetailHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(defaultCorner),
-        ),
-      ),
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 250,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Image.network(
-                    widget.banner,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: GestureDetector(
-                      onTap: () {
-                        widget.onBackPressed.call();
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey,
-                        ),
-                        child: const Icon(
-                          Icons.chevron_left_rounded,
-                          size: 32,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double height = 250;
+        if (constraints.maxWidth <= 600) {
+          height = 250;
+        } else if (constraints.maxWidth <= 1000) {
+          height = 300;
+        } else if (constraints.maxWidth <= 1200) {}
+        height = 400;
+        return Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(defaultCorner),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.title,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.headline6,
+          child: Column(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: height,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Image.network(
+                        widget.banner,
+                        fit: BoxFit.cover,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${widget.writer} | Chapter ${widget.lastChapter}',
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              color: Colors.blueGrey,
+                    ),
+                    SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 16),
+                        child: GestureDetector(
+                          onTap: () {
+                            widget.onBackPressed.call();
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey,
                             ),
-                      ),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isFavourite = !isFavourite;
-                    });
-                  },
-                  child: Card(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
+                            child: const Icon(
+                              Icons.chevron_left_rounded,
+                              size: 32,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: Icon(
-                        Icons.favorite,
-                        color: isFavourite ? Colors.red : Colors.grey,
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.title,
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${widget.writer} | Chapter ${widget.lastChapter}',
+                            maxLines: 1,
+                            style:
+                                Theme.of(context).textTheme.subtitle2?.copyWith(
+                                      color: Colors.blueGrey,
+                                    ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isFavourite = !isFavourite;
+                        });
+                      },
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Icon(
+                            Icons.favorite,
+                            color: isFavourite ? Colors.red : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
