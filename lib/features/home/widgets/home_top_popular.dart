@@ -34,35 +34,79 @@ class HomeTopPopular extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        SizedBox(
-          height: tileHeight,
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              final item = data[index];
-              return buildTile(
-                context: context,
-                banner: item['banner'] as String,
-                title: item['title'] as String,
-                writer: item['writer'] as String,
-                lastChapter: item['lastChapter'] as int,
-                lastChapterTime: item['lastChapterTime'] as int,
-                genreCount: item['genres'] as int,
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(width: 16),
-            itemCount: data.length,
-          ),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth <= 600) {
+              return buildList(context, 250);
+            } else if (constraints.maxWidth <= 1000) {
+              return buildList(context, 300);
+            } else if (constraints.maxWidth <= 1200) {
+              return buildGrid(context, 3, 2.6 / 1);
+            }
+            return buildGrid(context, 5, 1.8 / 1);
+          },
         ),
         const SizedBox(height: 24),
       ],
     );
   }
 
+  Widget buildGrid(BuildContext context, int gridCount, double tileRatio) {
+    return GridView.count(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      crossAxisCount: gridCount,
+      childAspectRatio: tileRatio,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      shrinkWrap: true,
+      children: List.generate(
+        data.length,
+        (index) {
+          final item = data[index];
+          return buildTile(
+            context: context,
+            width: double.infinity,
+            banner: item['banner'] as String,
+            title: item['title'] as String,
+            writer: item['writer'] as String,
+            lastChapter: item['lastChapter'] as int,
+            lastChapterTime: item['lastChapterTime'] as int,
+            genreCount: item['genres'] as int,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildList(BuildContext context, double tileWidth) {
+    return SizedBox(
+      height: tileHeight,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          final item = data[index];
+          return buildTile(
+            context: context,
+            width: tileWidth,
+            banner: item['banner'] as String,
+            title: item['title'] as String,
+            writer: item['writer'] as String,
+            lastChapter: item['lastChapter'] as int,
+            lastChapterTime: item['lastChapterTime'] as int,
+            genreCount: item['genres'] as int,
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(width: 16),
+        itemCount: data.length,
+      ),
+    );
+  }
+
   Widget buildTile({
     required BuildContext context,
+    required double width,
     required String banner,
     required String title,
     required String writer,
@@ -81,7 +125,7 @@ class HomeTopPopular extends StatelessWidget {
         genreCount,
       ),
       child: SizedBox(
-        width: (MediaQuery.of(context).size.width / 2) + 32,
+        width: width,
         height: tileHeight,
         child: Card(
           shape: RoundedRectangleBorder(
@@ -92,11 +136,15 @@ class HomeTopPopular extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(defaultCorner),
-                  child: Image.network(
-                    banner,
-                    width: 80,
+                SizedBox(
+                  width: 80,
+                  height: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(defaultCorner),
+                    child: Image.network(
+                      banner,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
