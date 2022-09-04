@@ -17,9 +17,6 @@ class HomeNewUpdate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ///shuffle list
-    final newData = List.from(data);
-    newData.shuffle();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,9 +30,30 @@ class HomeNewUpdate extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        SizedBox(
-          height: 300,
-          child: ListView.separated(
+        buildList(),
+      ],
+    );
+  }
+
+  Widget buildList() {
+    ///shuffle list
+    final newData = List.from(data);
+    newData.shuffle();
+    return SizedBox(
+      height: 300,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          double tileWidth = 0;
+          if (constraints.maxWidth <= 400) {
+            tileWidth = MediaQuery.of(context).size.width / 2;
+          } else if (constraints.maxWidth <= 600) {
+            tileWidth = MediaQuery.of(context).size.width / 3;
+          } else if (constraints.maxWidth <= 1200) {
+            tileWidth = MediaQuery.of(context).size.width / 6;
+          } else {
+            tileWidth = MediaQuery.of(context).size.width / 8;
+          }
+          return ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -43,6 +61,7 @@ class HomeNewUpdate extends StatelessWidget {
               final item = newData[index];
               return buildTile(
                 context: context,
+                tileWidth: tileWidth,
                 banner: item['banner'] as String,
                 title: item['title'] as String,
                 writer: item['writer'] as String,
@@ -53,14 +72,15 @@ class HomeNewUpdate extends StatelessWidget {
             },
             separatorBuilder: (context, index) => const SizedBox(width: 16),
             itemCount: data.length,
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
 
   Widget buildTile({
     required BuildContext context,
+    required double tileWidth,
     required String banner,
     required String title,
     required String writer,
@@ -79,14 +99,17 @@ class HomeNewUpdate extends StatelessWidget {
         genreCount,
       ),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width / 2,
+        width: tileWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(defaultCorner),
-                child: Image.network(banner),
+                child: Image.network(
+                  banner,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(height: 8),
