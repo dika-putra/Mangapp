@@ -1,6 +1,6 @@
 {
-  "name": "mangapp",
-  "short_name": "mangapp",
+  "name": "MangApp",
+  "short_name": "MangApp",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffbb13",
