@@ -48,6 +48,8 @@ class HomeNewUpdate extends StatelessWidget {
             tileWidth = MediaQuery.of(context).size.width / 2;
           } else if (constraints.maxWidth <= 600) {
             tileWidth = MediaQuery.of(context).size.width / 3;
+          } else if (constraints.maxWidth <= 800) {
+            tileWidth = MediaQuery.of(context).size.width / 4;
           } else if (constraints.maxWidth <= 1200) {
             tileWidth = MediaQuery.of(context).size.width / 6;
           } else {
