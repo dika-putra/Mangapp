@@ -22,28 +22,83 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DetailHeader(
-              banner: banner,
-              lastChapter: lastChapter,
-              title: title,
-              writer: writer,
-              onBackPressed: () => Navigator.of(context).pop(),
-            ),
-            const SizedBox(height: 16),
-            DetailGenre(),
-            const SizedBox(height: 16),
-            const DetailDescription(),
-            const SizedBox(height: 16),
-            DetailChapters(
-              lastChapter: lastChapter,
-            ),
-            const SizedBox(height: defaultPadding),
-          ],
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth <= 600) {
+              return buildPhone(context);
+            } else if (constraints.maxWidth <= 1000) {
+              return buildTab(context, 1);
+            } else if (constraints.maxWidth <= 1200) {
+              return buildTab(context, 3);
+            }
+            return buildTab(context, 3);
+          },
         ),
       ),
+    );
+  }
+
+  Widget buildPhone(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        DetailHeader(
+          banner: banner,
+          lastChapter: lastChapter,
+          title: title,
+          writer: writer,
+          onBackPressed: () => Navigator.of(context).pop(),
+        ),
+        const SizedBox(height: 16),
+        DetailGenre(),
+        const SizedBox(height: 16),
+        const DetailDescription(),
+        const SizedBox(height: 16),
+        DetailChapters(
+          lastChapter: lastChapter,
+        ),
+        const SizedBox(height: defaultPadding),
+      ],
+    );
+  }
+
+  Widget buildTab(BuildContext context, int flex) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: DetailHeader(
+                banner: banner,
+                lastChapter: lastChapter,
+                title: title,
+                writer: writer,
+                onBackPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              flex: flex,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  DetailGenre(),
+                  const SizedBox(height: 16),
+                  const DetailDescription(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: defaultPadding),
+        DetailChapters(
+          lastChapter: lastChapter,
+        ),
+        const SizedBox(height: defaultPadding),
+      ],
     );
   }
 }
