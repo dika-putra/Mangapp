@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mangapp/commons/image_widget.dart';
 
 import '../../../commons/constants.dart';
 
@@ -57,7 +58,7 @@ class _DetailHeaderState extends State<DetailHeader> {
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: Image.network(
+                  child: ImageWidget(
                     widget.banner,
                     fit: BoxFit.cover,
                   ),
@@ -169,7 +170,7 @@ class _DetailHeaderState extends State<DetailHeader> {
             SizedBox(
               width: 400,
               height: height,
-              child: Image.network(
+              child: ImageWidget(
                 widget.banner,
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mangapp/commons/constants.dart';
+import 'package:mangapp/commons/image_widget.dart';
 
 class HomeBanner extends StatelessWidget {
   const HomeBanner({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class HomeBanner extends StatelessWidget {
         height: MediaQuery.of(context).size.width / 4.5,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(defaultCorner),
-          child: Image.network(
+          child: const ImageWidget(
             'https://assets.christiantimes.com/files/cache/image/2/50/25070_w_760_281.jpg',
             fit: BoxFit.cover,
           ),

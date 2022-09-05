@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mangapp/commons/constants.dart';
+import 'package:mangapp/commons/image_widget.dart';
 
 class HomeTopPopular extends StatelessWidget {
   final List<Map<String, Object>> data;
@@ -141,7 +142,7 @@ class HomeTopPopular extends StatelessWidget {
                   height: double.infinity,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(defaultCorner),
-                    child: Image.network(
+                    child: ImageWidget(
                       banner,
                       fit: BoxFit.cover,
                     ),
