@@ -5,7 +5,7 @@ import 'package:mangapp/features/home/widgets/home_banner.dart';
 import 'package:mangapp/features/home/widgets/home_new_update.dart';
 import 'package:mangapp/features/home/widgets/home_top_popular.dart';
 
-import '../../commons/constants.dart';
+import '../../commons/dummies.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

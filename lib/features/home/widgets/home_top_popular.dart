@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mangapp/commons/constants.dart';
 import 'package:mangapp/commons/image_widget.dart';
 
+import '../../../commons/dummies.dart';
+
 class HomeTopPopular extends StatelessWidget {
   final List<Map<String, Object>> data;
   final double tileHeight = 150;
